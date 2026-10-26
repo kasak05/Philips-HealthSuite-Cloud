@@ -1,0 +1,100 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>HealthRecord - Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 850px;
+            margin: 40px auto;
+            padding: 0 20px;
+            background: #f4f7fb;
+            color: #243247;
+        }
+        h1 { color: #176b87; }
+        .panel {
+            background: white;
+            padding: 22px;
+            margin: 20px 0;
+            border-radius: 10px;
+        }
+        input, button {
+            padding: 11px;
+            margin: 6px 0;
+            box-sizing: border-box;
+        }
+        input { width: 100%; }
+        button {
+            background: #176b87;
+            color: white;
+            border: 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+        .note { color: #586579; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <h1>HealthRecord</h1>
+    <p>Patient Health Record Management — Student Demo</p>
+    <p class="note">
+        Uses synthetic data only. Not for real patient records or medical decisions.
+    </p>
+
+    <section class="panel">
+        <h2>Add a sample record</h2>
+        <form action="/add" method="post">
+            <label for="patient_code">Patient test ID</label>
+            <input id="patient_code" name="patient_code"
+                   placeholder="e.g. TEST-001" maxlength="30" required>
+
+            <label for="measurement">Sample measurement</label>
+            <input id="measurement" name="measurement"
+                   placeholder="e.g. Temperature: 36.8 C"
+                   maxlength="80" required>
+
+            <button type="submit">Save record</button>
+        </form>
+    </section>
+
+    <section class="panel">
+        <h2>Saved records</h2>
+        {% if records %}
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Patient test ID</th>
+                    <th>Measurement</th>
+                    <th>Recorded at</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in records %}
+                <tr>
+                    <td>{{ record.id }}</td>
+                    <td>{{ record.patient_code }}</td>
+                    <td>{{ record.measurement }}</td>
+                    <td>{{ record.recorded_at }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <p>No records yet. Add your first sample record above.</p>
+        {% endif %}
+    </section>
+</body>
+</html>
